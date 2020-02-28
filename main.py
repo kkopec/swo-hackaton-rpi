@@ -94,6 +94,7 @@ if __name__ == "__main__":
                             time.sleep(10)
                         elif PRESSED and not state:
                             PRESSED = False
+                            time.sleep(1)
 
                 except KeyboardInterrupt:
                     button_sigterm_handler()
