@@ -30,18 +30,24 @@ def show_status(status):
     GPIO.output(pin, GPIO.HIGH)
 
 if __name__ == "__main__":
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
+    #GPIO.setmode(GPIO.BCM)
+    #GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
     try:
         child_pid = os.fork()
         if child_pid == 0:
+            GPIO.setmode(GPIO.BCM)
+            GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
+            GPIO.output(11, GPIO.LOW)
+            time.sleep(0.5)
+            GPIO.output(11, GPIO.HIGH)
             try:
                 while True:
                     status = get_status()
                     show_status(status)
                     time.sleep(10)
             except KeyboardInterrupt:
+                GPIO.cleanup(PINS)
                 os.exit(0)
     except KeyboardInterrupt:
         GPIO.cleanup(PINS)
