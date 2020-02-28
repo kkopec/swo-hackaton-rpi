@@ -11,7 +11,7 @@ def get_status():
     r = requests.get(STATUS_URL)
 
     if r.status_code == 200:
-        res = json.loads(r.json())
+        res = r.json()
         return res['status']
 
 
