@@ -41,7 +41,7 @@ if __name__ == "__main__":
                     status = get_status()
                     show_status(status)
                     time.sleep(10)
-             except KeyboardInterrupt:
+            except KeyboardInterrupt:
                 os.exit(0)
     except KeyboardInterrupt:
         GPIO.cleanup(PINS)
