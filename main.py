@@ -8,7 +8,7 @@ import time
 STATUS_URL = 'https://hackaton.azurewebsites.net/status'
 ACTION_URL = 'https://hackaton.azurewebsites.net/action'
 PINS_OUT = [25, 8, 7, 11]
-PIN_IN = 24
+PIN_IN = 3
 
 STATE = dict([(pin, 0) for pin in PINS_OUT])
 
