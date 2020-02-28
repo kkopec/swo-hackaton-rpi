@@ -8,6 +8,8 @@ import time
 STATUS_URL = 'https://hackaton.azurewebsites.net/status'
 PINS = [25, 8, 7, 11]
 
+STATE = dict([(25,0), (8,0), (7,0)])
+
 def get_status():
     r = requests.get(STATUS_URL)
 
@@ -26,13 +28,13 @@ def show_status(status):
     elif status == "Success":
         pin = 7
 
-    [GPIO.output(p, GPIO.HIGH) for p in PINS]
-    GPIO.output(pin, GPIO.LOW)
+    if status == "Failure" and STATE[25] == 0:
+            GPIO.output(11, GPIO.LOW)
+            time.sleep(0.5)
+            GPIO.output(11, GPIO.HIGH)
 
-    if status == "Failure":
-        GPIO.output(11, GPIO.LOW)
-        time.sleep(0.5)
-        GPIO.output(11, GPIO.HIGH)
+    STATE[pin] = 1
+    [GPIO.output(p, GPIO.HIGH) if v is 0 else GPIO.output(pin, GPIO.LOW) for k,v in STATE]
 
 def sigterm_handler(a1, a2):
     GPIO.cleanup(PINS)
