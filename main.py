@@ -83,7 +83,7 @@ if __name__ == "__main__":
             if button_pid == 0:
                 # button child
                 signal.signal(signal.SIGTERM, button_sigterm_handler)
-                GPIO.setup(PIN_IN, GPIO.IN, pull_up_down=GPIO.PUD_UP )
+                GPIO.setup(PIN_IN, GPIO.IN)
 
                 try:
                     GPIO.add_event_detect(PIN_IN, GPIO.RISING, callback=on_button_pressed, bouncetime=10000)
