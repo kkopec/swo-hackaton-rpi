@@ -59,7 +59,6 @@ def on_button_pressed(a):
 
 if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
-    #GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
     lamp_pid, button_pid = None, None
     try:
@@ -86,7 +85,7 @@ if __name__ == "__main__":
                 GPIO.setup(PIN_IN, GPIO.IN)
 
                 try:
-                PRESSED = False
+                    PRESSED = False
                     while True:
                         if not PRESSED and GPIO.input(PIN_IN):
                             on_button_pressed(None)
@@ -105,7 +104,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         os.kill(lamp_pid, signal.SIGTERM)
         os.kill(button_pid, signal.SIGTERM)
-        #GPIO.cleanup(PINS)
-
-    #GPIO.cleanup(PINS)
-
