@@ -33,7 +33,7 @@ def show_status(status):
             time.sleep(0.5)
             GPIO.output(11, GPIO.HIGH)
 
-    STATE[pin] = 1
+    [GPIO.output(STATE[k]=0 if k != pin else STATE[k]=1 for k,v in STATE.items()]
     [GPIO.output(k, GPIO.HIGH) if v is 0 else GPIO.output(k, GPIO.LOW) for k,v in STATE.items()]
 
 def sigterm_handler(a1, a2):
