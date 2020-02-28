@@ -26,16 +26,20 @@ def show_status(status):
     elif status == "Success":
         pin = 7
 
+    [GPIO.output(p, GPIO.HIGH) for p in PINS]
     GPIO.output(pin, GPIO.LOW)
-    time.sleep(1)
-    GPIO.output(pin, GPIO.HIGH)
 
-def sigterm_handler():
+    if status == "Failure":
+        GPIO.output(11, GPIO.LOW)
+        time.sleep(0.5)
+        GPIO.output(11, GPIO.HIGH)
+
+def sigterm_handler(a1, a2):
     GPIO.cleanup(PINS)
     os.exit(0)
 
 if __name__ == "__main__":
-    #GPIO.setmode(GPIO.BCM)
+    GPIO.setmode(GPIO.BCM)
     #GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
     child_pid = None
@@ -43,7 +47,7 @@ if __name__ == "__main__":
         child_pid = os.fork()
         if child_pid == 0:
             signal.signal(signal.SIGTERM, sigterm_handler)
-            GPIO.setmode(GPIO.BCM)
+            #GPIO.setmode(GPIO.BCM)
             GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
             GPIO.output(11, GPIO.LOW)
             time.sleep(0.5)
@@ -59,7 +63,7 @@ if __name__ == "__main__":
             pid, status = os.waitpid(child_pid, 0)
     except KeyboardInterrupt:
         os.kill(child_pid, signal.SIGTERM)
-        GPIO.cleanup(PINS)
+        #GPIO.cleanup(PINS)
 
-    GPIO.cleanup(PINS)
+    #GPIO.cleanup(PINS)
 
