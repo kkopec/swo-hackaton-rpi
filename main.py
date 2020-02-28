@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import requests
 import os
+import signal
 import json
 import time
 
@@ -29,13 +30,19 @@ def show_status(status):
     time.sleep(1)
     GPIO.output(pin, GPIO.HIGH)
 
+def sigterm_handler():
+    GPIO.cleanup(PINS)
+    os.exit(0)
+
 if __name__ == "__main__":
     #GPIO.setmode(GPIO.BCM)
     #GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
+    child_pid = None
     try:
         child_pid = os.fork()
         if child_pid == 0:
+            signal.signal(signal.SIGTERM, sigterm_handler)
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
             GPIO.output(11, GPIO.LOW)
@@ -47,9 +54,11 @@ if __name__ == "__main__":
                     show_status(status)
                     time.sleep(10)
             except KeyboardInterrupt:
-                GPIO.cleanup(PINS)
-                os.exit(0)
+                sigterm_handler()
+        else:
+            pid, status = os.waitpit(child_pid, 0)
     except KeyboardInterrupt:
+        os.kill(child_pid, signal.SIGTERM)
         GPIO.cleanup(PINS)
 
     GPIO.cleanup(PINS)
