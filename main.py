@@ -56,7 +56,7 @@ if __name__ == "__main__":
             except KeyboardInterrupt:
                 sigterm_handler()
         else:
-            pid, status = os.waitpit(child_pid, 0)
+            pid, status = os.waitpid(child_pid, 0)
     except KeyboardInterrupt:
         os.kill(child_pid, signal.SIGTERM)
         GPIO.cleanup(PINS)
