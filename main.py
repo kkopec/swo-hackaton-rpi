@@ -50,7 +50,7 @@ def button_sigterm_handler(a1, a2):
     GPIO.cleanup(PIN_IN)
     os.exit(0)
 
-def on_button_pressed():
+def on_button_pressed(a):
     print('Button pressed!')
     r = requests.post(ACTION_URL, data= {})
 
@@ -83,7 +83,7 @@ if __name__ == "__main__":
             if button_pid == 0:
                 # button child
                 signal.signal(signal.SIGTERM, button_sigterm_handler)
-                GPIO.setup(PIN_IN, GPIO.IN)
+                GPIO.setup(PIN_IN, GPIO.IN, pull_up_down=GPIO.PUD_UP )
 
                 try:
                     GPIO.add_event_detect(PIN_IN, GPIO.RISING, callback=on_button_pressed, bouncetime=10000)
