@@ -88,7 +88,7 @@ if __name__ == "__main__":
                 try:
                     GPIO.add_event_detect(PIN_IN, GPIO.RISING, callback=on_button_pressed, bouncetime=10000)
                     while True:
-                        sleep(1)
+                        time.sleep(1)
 
                 except KeyboardInterrupt:
                     button_sigterm_handler()
