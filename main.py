@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import requests
 import os
-import signal
+import json
 import time
 
 STATUS_URL = 'https://hackaton.azurewebsites.net/status'
