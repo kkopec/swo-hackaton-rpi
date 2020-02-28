@@ -86,11 +86,13 @@ if __name__ == "__main__":
                 GPIO.setup(PIN_IN, GPIO.IN)
 
                 try:
-                    #GPIO.add_event_detect(PIN_IN, GPIO.RISING, callback=on_button_pressed, bouncetime=10000)
+                PRESSED = False
                     while True:
-                        if GPIO.input(PIN_IN):
+                        if not PRESSED and GPIO.input(PIN_IN):
                             on_button_pressed(None)
+                            PRESSED = True
                             time.sleep(10)
+                            PRESSED = False
 
                 except KeyboardInterrupt:
                     button_sigterm_handler()
