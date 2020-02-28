@@ -16,6 +16,7 @@ def get_status():
 
 
 def show_status(status):
+    print(status)
     pin = None
     if status == "Failure":
         pin = 25
@@ -33,12 +34,14 @@ if __name__ == "__main__":
     GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
     try:
-        while True:
-            child_pid = os.fork()
-            if child_pid == 0:
-                status = get_status()
-                show_status(status)
-                time.sleep(10)
+        child_pid = os.fork()
+        if child_pid == 0:
+            try:
+                while True:
+                    status = get_status()
+                    show_status(status)
+                    time.sleep(10)
+             except KeyboardInterrupt:
                 os.exit(0)
     except KeyboardInterrupt:
         GPIO.cleanup(PINS)
