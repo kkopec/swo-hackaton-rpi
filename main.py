@@ -87,10 +87,12 @@ if __name__ == "__main__":
                 try:
                     PRESSED = False
                     while True:
-                        if not PRESSED and GPIO.input(PIN_IN):
+                        state = GPIO.input(PIN_IN)
+                        if not PRESSED and state:
                             on_button_pressed(None)
                             PRESSED = True
                             time.sleep(10)
+                        elif PRESSED and not state:
                             PRESSED = False
 
                 except KeyboardInterrupt:
