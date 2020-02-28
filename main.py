@@ -5,13 +5,13 @@ STATUS_URL = 'https://hackaton.azurewebsites.net/status'
 PINS = [25, 8, 7, 11]
 
 def get_status():
-    res = requests(STATUS_URL)
+    res = requests.get(STATUS_URL)
 
     print(res.status_code)
     print(res.json())
 
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(PINS, GPIO.OUT, initial=GPIO.HIGH)
 
